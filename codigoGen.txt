@@ -1,0 +1,10 @@
+
+acc <- 3
+push acc
+acc <- 8
+push acc
+acc <- 6
+acc <- acc - top_of_stack
+pop
+acc <- acc + top_of_stack
+pop
