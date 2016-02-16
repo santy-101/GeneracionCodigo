@@ -44,5 +44,10 @@ public class GeneracionCod {
 		}
 		return resultado;
 	}
+	
+	public void mostrarResultados()
+	{
+		
+	}
 
 }
