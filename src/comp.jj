@@ -6,7 +6,7 @@ class comp
 	{
 		try
 		{
-		    File fe = new File("codigo.c");
+		    File fe = new File("codigo.txt");
 			BufferedReader entrada;
 			entrada = new BufferedReader(new FileReader(fe));
 			comp analizador = new comp(entrada) ;
@@ -289,7 +289,8 @@ void Sentencias(Token fun):
 	(	
 	  VariablesLocales(fun)	
     | SentenciaIf() 
-	| SentenciaDo()	
+	| SentenciaDo()
+	| SentenciaWhile()
 	| LOOKAHEAD(2)SentenciaAsignacion()<PUNTOYCOMA>{TokenAsignaciones.segunda = 0;}
 	| SentenciaWrite()
 	| SentenciaRead()<PUNTOYCOMA>
@@ -298,18 +299,24 @@ void Sentencias(Token fun):
 
 // *********Definicion de Sentencia IF
 void SentenciaIf():
-{Token fun= new Token();}
+{Token fun= new Token();
+GenerarCodigo gen = new GenerarCodigo();
+}
 {
-	<IF><PARIZQ> A() <PARDER> <THEN > <LLAVEIZQ> Sentencias(fun) <LLAVEDER> (Sino())* 
+	<IF><PARIZQ> {gen.ifs(1);} A() <PARDER> <THEN > <LLAVEIZQ> {gen.ifs(2);}Sentencias(fun) <LLAVEDER> (Sino())* 
 }
 void Sino():
-{Token fun = new Token();}
+{Token fun = new Token();
+GenerarCodigo gen = new GenerarCodigo();
+}
 {
-	<ELSE><LLAVEIZQ> Sentencias(fun) <LLAVEDER>
+	<ELSE><LLAVEIZQ> {gen.ifs(3);}Sentencias(fun) <LLAVEDER>
 }
 
 void A():
-{}
+{
+  Token v1;
+}
 {
 	  Comparaciones() ([(<AND>|<OR>)] Comparaciones())*
 }
@@ -330,8 +337,8 @@ Token Valor():
 {Token v1= null ;
 }
 {
-	LOOKAHEAD(2) (v1=<IDENTIFICADOR> | v1=<NUMERO>) | v1=Expresion()
-	{return v1;} 
+	LOOKAHEAD(2) (v1=<IDENTIFICADOR> | v1=<NUMERO>){return v1;}  | Expresion()
+	
 }
 Token Expresion():
 {int i;
@@ -373,17 +380,20 @@ int OpAritmetico(Token v1, Token v2):
 
 // *********Definicion de Sentencia DO
 void SentenciaDo():
-{Token fun= new Token();}
+{Token fun= new Token();
+GenerarCodigo gen = new GenerarCodigo();}
 {
-	<DO> <LLAVEIZQ>Sentencias(fun) <LLAVEDER> <WHILE> <PARIZQ> Comparaciones() <PARDER> <PUNTOYCOMA>
+	<DO> <LLAVEIZQ>{gen.dos(1);}Sentencias(fun) <LLAVEDER> <WHILE> <PARIZQ>{gen.dos(2);} Comparaciones() <PARDER> <PUNTOYCOMA>
 		
 }
 
 // *********Definicion de WHILE
 void SentenciaWhile():
-{Token fun= new Token();}
+{Token fun= new Token();
+GenerarCodigo gen = new GenerarCodigo();
+}
 {
-	<WHILE> <PARIZQ> Comparaciones() <PARDER> <DO> <LLAVEIZQ> Sentencias(fun) <LLAVEDER>
+	<WHILE> <PARIZQ> {gen.dos(3);}Comparaciones() <PARDER> <DO> <LLAVEIZQ> {gen.dos(4);}Sentencias(fun) <LLAVEDER>
 }
 
 // *********Definicion de  Sentencia ASIGNACION

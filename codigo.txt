@@ -10,14 +10,14 @@ int:a;
 int:f;
 x=a+b-c;
 int:g=0;
+if(a>b) then{
+g=2;
 }
-
-
-
-	 
-	
-	
-	
-	
-		
+else
+{
+g=1;
+}
+do{x=9;}while(g>0);
+while(a>1)do{g=a+1;}	
+}		
 }

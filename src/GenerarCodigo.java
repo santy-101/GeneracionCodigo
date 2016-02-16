@@ -42,7 +42,7 @@ public class GenerarCodigo {
 	 
 	public void generadorMain()
 	{String entrada="";
-			code+="main_entry:"+"\n";
+			code+="\nmain_entry:"+"\n";
 			System.out.println(entrada);
 	}
 	public void asignacion(String var,String asig)
@@ -69,48 +69,177 @@ public class GenerarCodigo {
 	public void operadores(String var1,String var2,String var)
 	{
 		var.trim();
+		int a=-1111111,b=-111111;
+		boolean c=false,d=false;
+		int x=0;
+		try{
+			a=Integer.parseInt(var1);
+			c=true;
+			}
+			catch (Exception e)
+			{
+				
+			}
+		try{
+		b=Integer.parseInt(var2);
+		d=true;
+		}
+		catch (Exception e)
+		{
+			
+		}
+		
+		if(c==true && d==true)//var1 es numero var2 es numero
+		{	x=1;
+		}else
+			if(c==false && d==true)// var1 es registro var2 es numero
+			{
+				x=2;
+			}else
+				if(c==true && d==false)// var1 es numero var2 es registro
+				{
+					x=3;
+				}else
+					if(c==false && d==false)// var1 es registro var2 es registro
+					{
+						x=4;
+					}
 		if(var.equals("=="))
 		{
-			code+="igual "+var1+", "+var2+" => "+var+"\n";
+			if(x==1)
+			{
+			code+="eq "+var1+" "+var2+"\n";}
+			if(x==2)
+			{
+			code+="eq "+buscarRegistro(var1)+" "+var2+"\n";}
+			if(x==3)
+			{
+			code+="eq "+var1+" "+buscarRegistro(var2)+"\n";}
+			if(x==4)
+			{
+			code+="eq "+buscarRegistro(var1)+" "+buscarRegistro(var2)+"\n";}
 		}
 		if(var.equals(">="))
 		{
-			code+="mayorigual "+var1+", "+var2+" => "+var+"\n";
+			if(x==1)
+			{
+			code+="egt "+var1+" "+var2+"\n";}
+			if(x==2)
+			{
+			code+="egt "+buscarRegistro(var1)+" "+var2+"\n";}
+			if(x==3)
+			{
+			code+="egt "+var1+" "+buscarRegistro(var2)+"\n";}
+			if(x==4)
+			{code+="egt "+buscarRegistro(var1)+" "+buscarRegistro(var2)+"\n";}
 		}
 		if(var.equals("<="))
 		{
-			code+="menorigual "+var1+", "+var2+" => "+var+"\n";
+			if(x==1)
+			{
+			code+="elt "+var1+" "+var2+"\n";}
+			if(x==2)
+			{
+			code+="elt "+buscarRegistro(var1)+" "+var2+"\n";}
+			if(x==3)
+			{
+			code+="elt "+var1+" "+buscarRegistro(var2)+"\n";}
+			if(x==4)
+			{
+			code+="elt "+buscarRegistro(var1)+" "+buscarRegistro(var2)+"\n";}
 		}
 		if(var.equals(">"))
 		{
-			code+="mayor "+var1+", "+var2+" => "+var+"\n";
+			if(x==1)
+			{
+			code+="gt "+var1+" "+var2+"\n";}
+			if(x==2)
+			{
+			code+="gt "+buscarRegistro(var1)+" "+var2+"\n";}
+			if(x==3)
+			{
+			code+="gt "+var1+" "+buscarRegistro(var2)+"\n";}
+			if(x==4)
+			{
+			code+="gt "+buscarRegistro(var1)+" "+buscarRegistro(var2)+"\n";}
 		}if(var.equals("<"))
+		{if(x==1)
 		{
-			code+="menor "+var1+", "+var2+" => "+var+"\n";
+		code+="lt "+var1+" "+var2+"\n";}
+		if(x==2)
+		{
+		code+="lt "+buscarRegistro(var1)+" "+var2+"\n";}
+		if(x==3)
+		{
+		code+="lt "+var1+" "+buscarRegistro(var2)+"\n";}
+		if(x==4)
+		{
+			code+="lt "+buscarRegistro(var1)+" "+buscarRegistro(var2)+"\n";}
 		}if(var.equals("!="))
+		{if(x==1)
 		{
-			code+="disting "+var1+", "+var2+" => "+var+"\n";
+		code+="distinct "+var1+" "+var2+"\n";}
+		if(x==2)
+		{
+		code+="distinct "+buscarRegistro(var1)+" "+var2+"\n";}
+		if(x==3)
+		{
+		code+="distinct "+var1+" "+buscarRegistro(var2)+"\n";}
+		if(x==4)
+		{
+			code+="distinct "+buscarRegistro(var1)+" "+buscarRegistro(var2)+"\n";}
 		}
-			 
-		
 	}
+	
 	public void operadorBinario(String var1, String var2,  int operador)
 	{ 
+		int a=-1111111;
+		boolean c=false;
+		int x=0;
+		try{
+		a=Integer.parseInt(var2);
+		c=true;
+		}
+		catch (Exception e)
+		{
+			
+		}
+		
+		if(c==true)//var2 es numero
+		{	x=1;
+		}else
+			if(c==false)// var2 esregistro
+			{
+				x=2;
+			}
 		if(operador==1)
 		{
-			code+="add "+buscarRegistro(var1)+", "+buscarRegistro(var2)+" => "+buscarRegistro(var1)+"\n";
+			if(x==1)
+			{	code+="add "+buscarRegistro(var1)+", "+var2+" => "+buscarRegistro(var1)+"\n";}
+			if(x==2)
+			{	code+="add "+buscarRegistro(var1)+", "+buscarRegistro(var2)+" => "+buscarRegistro(var1)+"\n";}
+			
 		}
 		if(operador==2)
 		{
-			code+="sub "+buscarRegistro(var1)+", "+buscarRegistro(var2)+" => "+buscarRegistro(var1)+"\n";;
+			if(x==1)
+			{	code+="sub "+buscarRegistro(var1)+", "+var2+" => "+buscarRegistro(var1)+"\n";}
+			if(x==2)
+			{	code+="sub "+buscarRegistro(var1)+", "+buscarRegistro(var2)+" => "+buscarRegistro(var1)+"\n";;}
 		}
 		if(operador==3)
 		{
-			code+="mult "+buscarRegistro(var1)+", "+buscarRegistro(var2)+" => "+buscarRegistro(var1)+"\n";
+			if(x==1)
+			{	code+="mult "+buscarRegistro(var1)+", "+var2+" => "+buscarRegistro(var1)+"\n";}
+			if(x==2)
+			{	code+="mult "+buscarRegistro(var1)+", "+buscarRegistro(var2)+" => "+buscarRegistro(var1)+"\n";}
 		}
 		if(operador==4)
-		{
-			code+="div "+buscarRegistro(var1)+", "+buscarRegistro(var2)+" => "+buscarRegistro(var1)+"\n";
+		{if(x==1)
+		{	code+="div "+buscarRegistro(var1)+", "+var2+" => "+buscarRegistro(var1)+"\n";}
+		if(x==2)
+		{	
+			code+="div "+buscarRegistro(var1)+", "+buscarRegistro(var2)+" => "+buscarRegistro(var1)+"\n";}
 		}
 		
 	}
@@ -126,6 +255,41 @@ public class GenerarCodigo {
 		}
 	}
 	
+	public void ifs(int i)
+	{
+		if(i==1)
+		{
+		code+="\nif_entry:\n";
+		}
+		if(i==2)
+		{
+			code+="\nif_yes:\n";	
+		}
+		if(i==3)
+		{
+			code+="\nif_no:\n";	
+		}
+	}
+	
+	public void dos(int i)
+	{
+		if(i==1)
+		{
+		code+="\ndo_entry:\n";
+		}
+		if(i==2)
+		{
+			code+="\nwhile_condition:\n";	
+		}
+		if(i==3)
+		{
+			code+="\nwhile_entry:\n";	
+		}
+		if(i==4)
+		{
+			code+="\ndo_action:\n";	
+		}
+	}
 	public void imprimir()
 	{
 		System.out.println("Tabla de Registros");
