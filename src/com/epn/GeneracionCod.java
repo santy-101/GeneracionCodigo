@@ -45,7 +45,7 @@ public class GeneracionCod {
 		return resultado;
 	}
 	
-	public void mostrarResultados()
+	public void mostrarResultados1()
 	{
 		
 	}
